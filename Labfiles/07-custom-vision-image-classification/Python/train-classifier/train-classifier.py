@@ -35,10 +35,16 @@ def main():
 def Upload_Images(folder):
     print("Uploading images...")
     tags = training_client.get_tags(custom_vision_project.id)
+
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    test_images_dir_base = os.path.join(cur_dir, folder)
+
     for tag in tags:
         print(tag.name)
-        for image in os.listdir(os.path.join(folder,tag.name)):
-            image_data = open(os.path.join(folder,tag.name,image), "rb").read()
+        test_images_dir = os.path.join(test_images_dir_base, tag.name)
+        for image in os.listdir(test_images_dir):
+            image_path = os.path.join(test_images_dir, image)
+            image_data = open(image_path, "rb").read()
             training_client.create_images_from_data(custom_vision_project.id, image_data, [tag.id])
 
 def Train_Model():

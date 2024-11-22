@@ -17,9 +17,13 @@ def main():
         credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})
         prediction_client = CustomVisionPredictionClient(endpoint=prediction_endpoint, credentials=credentials)
 
+        cur_dir = os.path.dirname(os.path.abspath(__file__))
+        test_images_dir = os.path.join(cur_dir, 'test-images')
+
         # Classify test images
-        for image in os.listdir('test-images'):
-            image_data = open(os.path.join('test-images',image), "rb").read()
+        for image in os.listdir(test_images_dir):
+            test_image_path = os.path.join(test_images_dir, image)
+            image_data = open(test_image_path, "rb").read()
             results = prediction_client.classify_image(project_id, model_name, image_data)
 
             # Loop over each label prediction and print any with probability > 50%
@@ -31,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

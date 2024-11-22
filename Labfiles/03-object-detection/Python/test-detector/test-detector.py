@@ -9,6 +9,11 @@ def main():
     from dotenv import load_dotenv
 
     try:
+        # Get the directory of the current file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Change to that directory
+        os.chdir(current_dir)
+
         # Get Configuration Settings
         load_dotenv()
         prediction_endpoint = os.getenv('PredictionEndpoint')

@@ -33,6 +33,10 @@ def main():
 
 def Upload_Images(folder):
     print("Uploading images...")
+    # Get the directory of the current file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Change to that directory
+    os.chdir(current_dir)
 
     # Get the tags defined in the project
     tags = training_client.get_tags(custom_vision_project.id)
